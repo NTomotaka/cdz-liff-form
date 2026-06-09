@@ -60,7 +60,7 @@
   <h1>🍰 記録 <span class="mode-badge" id="modeBadge">閉店残</span></h1>
 
   <div class="stores" id="stores"></div>
-  <input class="search" id="search" type="search" placeholder="商品名で検索（例：モンブラン）" autocomplete="off">
+  <input class="search" id="search" type="search" placeholder="商品名で検索 ／ リストにない商品の入力もこちらから" autocomplete="off">
   <div class="chips" id="chips"></div>
 
   <div class="tray empty" id="tray">
@@ -299,9 +299,12 @@
       .map(function(c){ return c + ":" + qty[c]; });
   }
   function updateCnt(){
-    var n = currentEntries().length + freeEntries().length;
-    document.getElementById("cnt").textContent = n ? "（"+n+"品）" : "";
-    document.getElementById("send").disabled = (n === 0);
+    var total = Object.keys(qty)
+      .filter(function(c){ return qty[c] > 0 && qtyStore[c] === store; })
+      .reduce(function(s,c){ return s + qty[c]; }, 0);
+    freeEntries().forEach(function(r){ total += r.qty; });
+    document.getElementById("cnt").textContent = total > 0 ? "（"+total+"個）" : "";
+    document.getElementById("send").disabled = (total === 0);
   }
   function buildText(){
     var parts = currentEntries();
@@ -323,8 +326,9 @@
       headers:{ "Content-Type":"text/plain;charset=utf-8" },
       body: JSON.stringify({ source:"form", userId:USER_ID, text:text })
     }).then(function(){
-      var total = entries.length + freeEntries().length;
-      setMsg("✅ "+store+" "+total+"品を送信しました\n結果はLINEに届きます");
+      var totalQty = entries.reduce(function(s,e){ var q=parseInt(e.split(":")[1]||"0"); return s+q; },0);
+      freeEntries().forEach(function(r){ totalQty += r.qty; });
+      setMsg("✅ "+store+" 計"+totalQty+"個を送信しました\n結果はLINEに届きます");
       freeRows = []; renderFree();
       setTimeout(function(){ if (liff.isInClient()) liff.closeWindow(); }, 1400);
     }).catch(function(err){
