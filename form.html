@@ -44,6 +44,16 @@
   .submit button:disabled { background:#ddd; }
   .cnt { font-size:13px; }
   .msg { text-align:center; font-size:12px; color:var(--caramel); margin-top:6px; min-height:16px; white-space:pre-line; }
+  .free-section { margin-top:14px; }
+  .free-h { font-size:12px; color:var(--caramel); font-weight:700; margin:0 2px 6px; }
+  .free-row { display:flex; align-items:center; gap:6px; margin-bottom:7px; }
+  .free-name { flex:1; height:38px; border:1px solid var(--line); border-radius:10px; padding:0 10px;
+               font-size:14px; background:#fff; color:var(--choco); }
+  .free-name:focus { border-color:var(--pink); outline:none; }
+  .free-del { width:32px; height:32px; border:none; border-radius:8px; background:#f3ece1;
+              color:var(--caramel); font-size:18px; flex:0 0 auto; }
+  .free-add { width:100%; height:40px; border:1px dashed var(--caramel); border-radius:10px;
+              background:transparent; color:var(--caramel); font-size:14px; font-weight:600; margin-top:4px; }
 </style>
 </head>
 <body>
@@ -59,6 +69,13 @@
   </div>
 
   <div id="list"></div>
+
+  <!-- 自由入力 -->
+  <div class="free-section">
+    <div class="free-h">リストにない商品</div>
+    <div id="freeList"></div>
+    <button class="free-add" id="freeAdd">＋ 追加</button>
+  </div>
 
   <div class="submit">
     <button id="send">送信する <span class="cnt" id="cnt"></span></button>
@@ -212,18 +229,84 @@
     render();
   });
 
+  // ── 自由入力 ──
+  var freeRows = [];  // [{id, name, qty}]
+  var freeIdSeq = 0;
+
+  function freeRowHTML(id, name, qty){
+    var q = qty || 0;
+    return '<div class="free-row" data-fid="'+id+'">'+
+      '<input class="free-name" type="text" placeholder="商品名を入力" value="'+name.replace(/"/g,'&quot;')+'" data-fid="'+id+'">'+
+      '<div class="stepper">'+
+        '<button data-d="-1" data-fid="'+id+'">−</button>'+
+        '<input type="number" inputmode="numeric" min="0" value="'+q+'" data-fid="'+id+'">'+
+        '<button data-d="1" data-fid="'+id+'">＋</button>'+
+      '</div>'+
+      '<button class="free-del" data-fid-del="'+id+'">×</button>'+
+    '</div>';
+  }
+
+  function renderFree(){
+    var el = document.getElementById("freeList");
+    el.innerHTML = freeRows.map(function(r){ return freeRowHTML(r.id, r.name, r.qty); }).join("");
+    updateCnt();
+  }
+
+  function freeFind(id){ return freeRows.find(function(r){ return r.id === id; }); }
+
+  document.getElementById("freeAdd").addEventListener("click", function(){
+    freeRows.push({id: ++freeIdSeq, name: "", qty: 0});
+    renderFree();
+    // 追加した行の入力欄にフォーカス
+    var inputs = document.querySelectorAll(".free-name");
+    if (inputs.length) inputs[inputs.length-1].focus();
+  });
+
+  document.getElementById("freeList").addEventListener("input", function(e){
+    var fid = e.target.dataset.fid ? parseInt(e.target.dataset.fid) : null;
+    if (!fid) return;
+    var row = freeFind(fid); if (!row) return;
+    if (e.target.classList.contains("free-name")){
+      row.name = e.target.value.trim();
+    } else {
+      row.qty = Math.max(0, parseInt(e.target.value||"0",10)||0);
+    }
+    updateCnt();
+  });
+
+  document.getElementById("freeList").addEventListener("click", function(e){
+    var b = e.target.closest("[data-d][data-fid]");
+    if (b){
+      var fid = parseInt(b.dataset.fid), row = freeFind(fid); if (!row) return;
+      row.qty = Math.max(0, row.qty + parseInt(b.dataset.d,10));
+      renderFree(); return;
+    }
+    var del = e.target.closest("[data-fid-del]");
+    if (del){
+      var fid2 = parseInt(del.dataset.fidDel);
+      freeRows = freeRows.filter(function(r){ return r.id !== fid2; });
+      renderFree();
+    }
+  });
+
+  function freeEntries(){
+    return freeRows.filter(function(r){ return r.name && r.qty > 0; });
+  }
+
   function currentEntries(){
     return Object.keys(qty)
       .filter(function(c){ return qty[c] > 0 && qtyStore[c] === store; })
       .map(function(c){ return c + ":" + qty[c]; });
   }
   function updateCnt(){
-    var n = currentEntries().length;
+    var n = currentEntries().length + freeEntries().length;
     document.getElementById("cnt").textContent = n ? "（"+n+"品）" : "";
     document.getElementById("send").disabled = (n === 0);
   }
   function buildText(){
-    return MODE_UI.prefix + store + " " + currentEntries().join(" ");
+    var parts = currentEntries();
+    freeEntries().forEach(function(r){ parts.push("["+r.name+"]:"+r.qty); });
+    return MODE_UI.prefix + store + " " + parts.join(" ");
   }
 
   // ── 送信 ──
@@ -240,7 +323,9 @@
       headers:{ "Content-Type":"text/plain;charset=utf-8" },
       body: JSON.stringify({ source:"form", userId:USER_ID, text:text })
     }).then(function(){
-      setMsg("✅ "+store+" "+entries.length+"品を送信しました\n結果はLINEに届きます");
+      var total = entries.length + freeEntries().length;
+      setMsg("✅ "+store+" "+total+"品を送信しました\n結果はLINEに届きます");
+      freeRows = []; renderFree();
       setTimeout(function(){ if (liff.isInClient()) liff.closeWindow(); }, 1400);
     }).catch(function(err){
       setMsg("送信失敗："+(err && err.message ? err.message : err));
@@ -249,7 +334,7 @@
   });
 
   // ── データ読込 ＆ LIFF ──
-  fetch("products_by_store.json?v=20260609").then(function(r){ return r.json(); })
+  fetch("products_by_store.json?v=20260610").then(function(r){ return r.json(); })
     .then(function(j){ DATA = j; buildChips(); render(); })
     .catch(function(err){ setMsg("商品データ読込失敗："+err); });
 
