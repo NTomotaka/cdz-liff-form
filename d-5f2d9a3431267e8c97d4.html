@@ -18,10 +18,10 @@
  .detail-link{display:block;background:#5B331E;color:#fff;text-align:center;padding:12px;border-radius:14px;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:14px}
 </style></head><body>
  <h1>🍰 コートダジュール ダッシュボード</h1>
- <div class="ts">最終更新: 2026-06-11 20:12 JST ／ 管理者専用</div>
+ <div class="ts">最終更新: 2026-06-12 07:32 JST ／ 管理者専用</div>
  <a class="detail-link" href="https://cdz-dashboard.wellcon.biz" target="_blank">📊 詳細ダッシュボードを開く →</a>
  <div class="kpis">
-   <div class="kpi"><div class="v">155万円</div><div class="l">本日予測売上</div></div>
+   <div class="kpi"><div class="v">199万円</div><div class="l">本日予測売上</div></div>
    <div class="kpi"><div class="v">約2,885円</div><div class="l">廃棄/店舗日</div></div>
    <div class="kpi"><div class="v">10%</div><div class="l">記録達成率</div></div>
  </div>
@@ -30,39 +30,40 @@
  <section><h2>🗑 廃棄ロス / 📥 入力</h2>
    <canvas id="cov"></canvas>
    <p class="note">記録 3日/3店舗日・年換算 約286万円</p>
-   <p class="note warn">⏳ 昨日未記録: つくばイオン / メゾン</p>
+   <p class="note warn">⏳ 昨日未記録: 本店 / つくばイオン / メゾン</p>
  </section>
  <details><summary>📋 今日の生産・配送プラン（詳細）</summary><pre>☀️ おはようございます！
-📅 2026-06-11（木） / 天気: 曇 (16-24℃)
+📅 2026-06-12（金） / 天気: 雨 (17-24℃)
 
-📊 予測売上（3店舗合計 155万円）
-  本店     55.6万円 ━━━━━
-  つくばイオン 34.7万円 ━━━
-  メゾン    64.9万円 ━━━━━━
+📊 予測売上（3店舗合計 199万円）
+  本店     79.4万円 ━━━━━━━
+  つくばイオン 46.9万円 ━━━━
+  メゾン    72.7万円 ━━━━━━━
 
-🍰 必要生産数（カテゴリ別） 📥 繰越=昨夜の入力残在庫（入力のあった店のみ）
-  本店: 生315（繰越3+新規312） / 半生137 / 焼259 / 冷12
-  つくばイオン: 生205 / 半生77 / 焼133 / 冷2
-  メゾン: 生386 / 半生160 / 焼277 / 冷17
+🍰 必要生産数（カテゴリ別） 📂 前日繰越データなし（必要数を全量計上）
+  本店: 生451 / 半生196 / 焼370 / 冷17
+  つくばイオン: 生277 / 半生104 / 焼180 / 冷3
+  メゾン: 生433 / 半生180 / 焼310 / 冷19
 
 🏭 工場別の製造割当（新規製造分・イオン分含む）
-  本店工場: 生415 / 半生176 / 焼326 / 冷13
-  メゾン工場: 生488 / 半生198 / 焼343 / 冷18
+  本店工場: 生590 / 半生248 / 焼460 / 冷19
+  メゾン工場: 生571 / 半生232 / 焼400 / 冷20
   ※イオン分は本店・メゾン工場で半分ずつ
 
 🚚 配送計画（イオンへ 1便構成）
   【平日朝便】
-    09:30 本店→つくばイオン 生103 / 半生39 / 焼67 / 冷1
-    09:30 メゾン→つくばイオン 生102 / 半生38 / 焼66 / 冷1
+    09:30 本店→つくばイオン 生139 / 半生52 / 焼90 / 冷2
+    09:30 メゾン→つくばイオン 生138 / 半生52 / 焼90 / 冷1
 
 ⚠️ 注意
   ・生クリームデコ: 最低5個キープ
+  ・雨予報: 本店・つくばイオンは小幅減 / メゾンは大きく減る傾向
   ・15時に再判断（ショーケース充足率チェック）
 
-🗑 昨日の閉店残が未記録: つくばイオン ・ メゾン
+🗑 昨日の閉店残が未記録: 本店 ・ つくばイオン ・ メゾン
   → 紙メモを撮って『記録コマンド』を送るだけで反映されます</pre></details>
 <script>
- var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [55.6, 34.7, 64.9]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [415, 488]}, {"label": "半生", "color": "#E18600", "data": [176, 198]}, {"label": "焼", "color": "#866134", "data": [326, 343]}, {"label": "冷", "color": "#42B6EE", "data": [13, 18]}]}, "cov": {"recorded": 2, "possible": 21, "rate": 10}};
+ var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [79.4, 46.9, 72.7]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [590, 571]}, {"label": "半生", "color": "#E18600", "data": [248, 232]}, {"label": "焼", "color": "#866134", "data": [460, 400]}, {"label": "冷", "color": "#42B6EE", "data": [19, 20]}]}, "cov": {"recorded": 2, "possible": 21, "rate": 10}};
  var co = {plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11}}}}};
  new Chart(document.getElementById('pred'),{type:'bar',data:{labels:D.pred.labels,datasets:[{label:'予測(万円)',data:D.pred.values,backgroundColor:'#F69D9D'}]},options:co});
  new Chart(document.getElementById('factory'),{type:'bar',data:{labels:D.factory.stores,datasets:D.factory.cats.map(function(c){return {label:c.label,data:c.data,backgroundColor:c.color};})},options:{plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}}}});
