@@ -18,52 +18,55 @@
  .detail-link{display:block;background:#5B331E;color:#fff;text-align:center;padding:12px;border-radius:14px;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:14px}
 </style></head><body>
  <h1>🍰 コートダジュール ダッシュボード</h1>
- <div class="ts">最終更新: 2026-06-26 18:52 JST ／ 管理者専用</div>
+ <div class="ts">最終更新: 2026-06-27 10:18 JST ／ 管理者専用</div>
  <a class="detail-link" href="https://cdz-dashboard.wellcon.biz" target="_blank">📊 詳細ダッシュボードを開く →</a>
  <div class="kpis">
-   <div class="kpi"><div class="v">227万円</div><div class="l">本日予測売上</div></div>
-   <div class="kpi"><div class="v">約16,084円</div><div class="l">廃棄/店舗日</div></div>
-   <div class="kpi"><div class="v">5%</div><div class="l">記録達成率</div></div>
+   <div class="kpi"><div class="v">332万円</div><div class="l">本日予測売上</div></div>
+   <div class="kpi"><div class="v">約12,923円</div><div class="l">廃棄/店舗日</div></div>
+   <div class="kpi"><div class="v">24%</div><div class="l">記録達成率</div></div>
  </div>
  <section><h2>📊 店舗別 予測売上（万円）</h2><canvas id="pred"></canvas></section>
  <section><h2>🏭 工場別 製造割当（カテゴリ別）</h2><canvas id="factory"></canvas></section>
  <section><h2>🗑 廃棄ロス / 📥 入力</h2>
    <canvas id="cov"></canvas>
-   <p class="note">記録 5日/5店舗日・年換算 約1,592万円</p>
-   <p class="note warn">⏳ 昨日未記録: 本店 / つくばイオン / メゾン</p>
+   <p class="note">記録 6日/9店舗日・年換算 約1,279万円</p>
+   <p class="note warn">⏳ 昨日未記録: メゾン</p>
  </section>
  <details><summary>📋 今日の生産・配送プラン（詳細）</summary><pre>☀️ おはようございます！
-📅 2026-06-26（金） / 天気: 雨 (19-24℃)
+📅 2026-06-27（土） / 天気: 雨 (21-22℃)
 
-📊 予測売上（3店舗合計 227万円）
-  本店     86.0万円 ━━━━━━━━
-  つくばイオン 50.9万円 ━━━━━
-  メゾン    90.5万円 ━━━━━━━━━
+📊 予測売上（3店舗合計 332万円）
+  本店      126万円 ━━━━━━━━━━━━
+  つくばイオン 72.2万円 ━━━━━━━
+  メゾン     134万円 ━━━━━━━━━━━━━
 
-🍰 必要生産数（カテゴリ別） 📂 前日繰越データなし（必要数を全量計上）
-  本店: 生492 / 半生214 / 焼404 / 冷18
-  つくばイオン: 生301 / 半生113 / 焼196 / 冷4
-  メゾン: 生536 / 半生223 / 焼384 / 冷24
+🍰 必要生産数（カテゴリ別） 📥 繰越=昨夜の入力残在庫（入力のあった店のみ）
+  本店: 生720（繰越139+新規581） / 半生314 / 焼592 / 冷27
+  つくばイオン: 生428（繰越146+新規282） / 半生161 / 焼278 / 冷5
+  メゾン: 生792 / 半生329 / 焼567 / 冷35
 
 🏭 工場別の製造割当（新規製造分・イオン分含む）
-  本店工場: 生643 / 半生271 / 焼502 / 冷20
-  メゾン工場: 生686 / 半生279 / 焼482 / 冷26
+  本店工場: 生722 / 半生395 / 焼731 / 冷30
+  メゾン工場: 生933 / 半生409 / 焼706 / 冷37
   ※イオン分は本店・メゾン工場で半分ずつ
 
-🚚 配送計画（イオンへ 1便構成）
-  【平日朝便】
-    09:30 本店→つくばイオン 生151 / 半生57 / 焼98 / 冷2
-    09:30 メゾン→つくばイオン 生150 / 半生56 / 焼98 / 冷2
+🚚 配送計画（イオンへ 2便構成）
+  【土曜朝便】
+    09:30 本店→つくばイオン 生71 / 半生41 / 焼70 / 冷2
+    09:30 メゾン→つくばイオン 生71 / 半生40 / 焼70 / 冷1
+  【土曜午後便】
+    14:00 本店→つくばイオン 生70 / 半生40 / 焼69 / 冷1
+    14:00 メゾン→つくばイオン 生70 / 半生40 / 焼69 / 冷1
 
 ⚠️ 注意
   ・生クリームデコ: 最低5個キープ
   ・雨予報: 本店・つくばイオンは小幅減 / メゾンは大きく減る傾向
   ・15時に再判断（ショーケース充足率チェック）
 
-🗑 昨日の閉店残が未記録: 本店 ・ つくばイオン ・ メゾン
+🗑 昨日の閉店残が未記録: メゾン
   → 紙メモを撮って『記録コマンド』を送るだけで反映されます</pre></details>
 <script>
- var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [86.0, 50.9, 90.5]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [643, 686]}, {"label": "半生", "color": "#E18600", "data": [271, 279]}, {"label": "焼", "color": "#866134", "data": [502, 482]}, {"label": "冷", "color": "#42B6EE", "data": [20, 26]}]}, "cov": {"recorded": 1, "possible": 21, "rate": 5}};
+ var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [125.8, 72.2, 133.6]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [722, 933]}, {"label": "半生", "color": "#E18600", "data": [395, 409]}, {"label": "焼", "color": "#866134", "data": [731, 706]}, {"label": "冷", "color": "#42B6EE", "data": [30, 37]}]}, "cov": {"recorded": 5, "possible": 21, "rate": 24}};
  var co = {plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11}}}}};
  new Chart(document.getElementById('pred'),{type:'bar',data:{labels:D.pred.labels,datasets:[{label:'予測(万円)',data:D.pred.values,backgroundColor:'#F69D9D'}]},options:co});
  new Chart(document.getElementById('factory'),{type:'bar',data:{labels:D.factory.stores,datasets:D.factory.cats.map(function(c){return {label:c.label,data:c.data,backgroundColor:c.color};})},options:{plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}}}});
