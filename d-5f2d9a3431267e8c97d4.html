@@ -18,18 +18,18 @@
  .detail-link{display:block;background:#5B331E;color:#fff;text-align:center;padding:12px;border-radius:14px;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:14px}
 </style></head><body>
  <h1>🍰 コートダジュール ダッシュボード</h1>
- <div class="ts">最終更新: 2026-07-03 17:58 JST ／ 管理者専用</div>
+ <div class="ts">最終更新: 2026-07-03 18:28 JST ／ 管理者専用</div>
  <a class="detail-link" href="https://cdz-dashboard.wellcon.biz" target="_blank">📊 詳細ダッシュボードを開く →</a>
  <div class="kpis">
    <div class="kpi"><div class="v">191万円</div><div class="l">本日予測売上</div></div>
-   <div class="kpi"><div class="v">約43,529円</div><div class="l">廃棄/店舗日</div></div>
-   <div class="kpi"><div class="v">76%</div><div class="l">記録達成率</div></div>
+   <div class="kpi"><div class="v">約50,357円</div><div class="l">廃棄/店舗日</div></div>
+   <div class="kpi"><div class="v">86%</div><div class="l">記録達成率</div></div>
  </div>
  <section><h2>📊 店舗別 予測売上（万円）</h2><canvas id="pred"></canvas></section>
  <section><h2>🏭 工場別 製造割当（カテゴリ別）</h2><canvas id="factory"></canvas></section>
  <section><h2>🗑 廃棄ロス / 📥 入力</h2>
    <canvas id="cov"></canvas>
-   <p class="note">記録 11日/21店舗日・年換算 約4,309万円</p>
+   <p class="note">記録 12日/23店舗日・年換算 約4,985万円</p>
    <p class="note warn">⏳ 昨日未記録: 本店</p>
  </section>
  <details><summary>📋 今日の生産・配送プラン（詳細）</summary><pre>☀️ おはようございます！
@@ -62,7 +62,7 @@
 🗑 昨日の閉店残が未記録: 本店
   → 紙メモを撮って『記録コマンド』を送るだけで反映されます</pre></details>
 <script>
- var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [70.5, 42.3, 77.7]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [540, 463]}, {"label": "半生", "color": "#E18600", "data": [166, 170]}, {"label": "焼", "color": "#866134", "data": [405, 421]}, {"label": "冷", "color": "#42B6EE", "data": [25, 19]}]}, "cov": {"recorded": 16, "possible": 21, "rate": 76}};
+ var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [70.5, 42.3, 77.7]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [540, 463]}, {"label": "半生", "color": "#E18600", "data": [166, 170]}, {"label": "焼", "color": "#866134", "data": [405, 421]}, {"label": "冷", "color": "#42B6EE", "data": [25, 19]}]}, "cov": {"recorded": 18, "possible": 21, "rate": 86}};
  var co = {plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11}}}}};
  new Chart(document.getElementById('pred'),{type:'bar',data:{labels:D.pred.labels,datasets:[{label:'予測(万円)',data:D.pred.values,backgroundColor:'#F69D9D'}]},options:co});
  new Chart(document.getElementById('factory'),{type:'bar',data:{labels:D.factory.stores,datasets:D.factory.cats.map(function(c){return {label:c.label,data:c.data,backgroundColor:c.color};})},options:{plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}}}});
