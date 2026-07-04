@@ -18,43 +18,43 @@
  .detail-link{display:block;background:#5B331E;color:#fff;text-align:center;padding:12px;border-radius:14px;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:14px}
 </style></head><body>
  <h1>🍰 コートダジュール ダッシュボード</h1>
- <div class="ts">最終更新: 2026-07-04 17:46 JST ／ 管理者専用</div>
+ <div class="ts">最終更新: 2026-07-05 06:05 JST ／ 管理者専用</div>
  <a class="detail-link" href="https://cdz-dashboard.wellcon.biz" target="_blank">📊 詳細ダッシュボードを開く →</a>
  <div class="kpis">
-   <div class="kpi"><div class="v">333万円</div><div class="l">本日予測売上</div></div>
-   <div class="kpi"><div class="v">約49,771円</div><div class="l">廃棄/店舗日</div></div>
-   <div class="kpi"><div class="v">71%</div><div class="l">記録達成率</div></div>
+   <div class="kpi"><div class="v">323万円</div><div class="l">本日予測売上</div></div>
+   <div class="kpi"><div class="v">約51,679円</div><div class="l">廃棄/店舗日</div></div>
+   <div class="kpi"><div class="v">67%</div><div class="l">記録達成率</div></div>
  </div>
  <section><h2>📊 店舗別 予測売上（万円）</h2><canvas id="pred"></canvas></section>
  <section><h2>🏭 工場別 製造割当（カテゴリ別）</h2><canvas id="factory"></canvas></section>
  <section><h2>🗑 廃棄ロス / 📥 入力</h2>
    <canvas id="cov"></canvas>
-   <p class="note">記録 12日/23店舗日・年換算 約4,927万円</p>
+   <p class="note">記録 13日/25店舗日・年換算 約5,116万円</p>
    <p class="note warn">⏳ 昨日未記録: つくばイオン</p>
  </section>
  <details><summary>📋 今日の生産・配送プラン（詳細）</summary><pre>☀️ おはようございます！
-📅 2026-07-04（土） / 天気: 雨 (19-25℃)
+📅 2026-07-05（日） / 天気: 雨 (21-25℃)
 
-📊 予測売上（3店舗合計 333万円）
-  本店      129万円 ━━━━━━━━━━━━
-  つくばイオン 72.9万円 ━━━━━━━
-  メゾン     131万円 ━━━━━━━━━━━━━
+📊 予測売上（3店舗合計 323万円）
+  本店      122万円 ━━━━━━━━━━━━
+  つくばイオン 72.5万円 ━━━━━━━
+  メゾン     128万円 ━━━━━━━━━━━━
 
 🍰 必要生産数（カテゴリ別） 📥 繰越=昨夜の入力残在庫（入力のあった店のみ）
-  本店: 生821 / 半生238（繰越1519+新規0） / 焼590 / 冷40
-  つくばイオン: 生466 / 半生122 / 焼282 / 冷10
-  メゾン: 生859（繰越111+新規748） / 半生229 / 焼574 / 冷29
+  本店: 生779（繰越96+新規683） / 半生226（繰越609+新規0） / 焼560 / 冷38
+  つくばイオン: 生464 / 半生122 / 焼280 / 冷10
+  メゾン: 生840（繰越120+新規720） / 半生224 / 焼561 / 冷29
 
 🏭 工場別の製造割当（新規製造分・イオン分含む）
-  本店工場: 生1054 / 半生61 / 焼731 / 冷45
-  メゾン工場: 生981 / 半生290 / 焼715 / 冷34
+  本店工場: 生915 / 半生61 / 焼700 / 冷43
+  メゾン工場: 生952 / 半生285 / 焼701 / 冷34
   ※イオン分は本店・メゾン工場で半分ずつ
 
 🚚 配送計画（イオンへ 2便構成）
-  【土曜朝便】
-    09:30 本店→つくばイオン 生117 / 半生31 / 焼71 / 冷3
-    09:30 メゾン→つくばイオン 生117 / 半生31 / 焼71 / 冷3
-  【土曜午後便】
+  【日曜朝便】
+    09:30 本店→つくばイオン 生116 / 半生31 / 焼70 / 冷3
+    09:30 メゾン→つくばイオン 生116 / 半生31 / 焼70 / 冷3
+  【日曜午後便】
     14:00 本店→つくばイオン 生116 / 半生30 / 焼70 / 冷2
     14:00 メゾン→つくばイオン 生116 / 半生30 / 焼70 / 冷2
 
@@ -66,7 +66,7 @@
 🗑 昨日の閉店残が未記録: つくばイオン
   → 紙メモを撮って『記録コマンド』を送るだけで反映されます</pre></details>
 <script>
- var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [128.7, 72.9, 131.1]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [1054, 981]}, {"label": "半生", "color": "#E18600", "data": [61, 290]}, {"label": "焼", "color": "#866134", "data": [731, 715]}, {"label": "冷", "color": "#42B6EE", "data": [45, 34]}]}, "cov": {"recorded": 15, "possible": 21, "rate": 71}};
+ var D = {"pred": {"labels": ["本店", "イオン", "メゾン"], "values": [122.2, 72.5, 128.2]}, "factory": {"stores": ["本店工場", "メゾン工場"], "cats": [{"label": "生", "color": "#F69D9D", "data": [915, 952]}, {"label": "半生", "color": "#E18600", "data": [61, 285]}, {"label": "焼", "color": "#866134", "data": [700, 701]}, {"label": "冷", "color": "#42B6EE", "data": [43, 34]}]}, "cov": {"recorded": 14, "possible": 21, "rate": 67}};
  var co = {plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{ticks:{font:{size:11}}},y:{ticks:{font:{size:11}}}}};
  new Chart(document.getElementById('pred'),{type:'bar',data:{labels:D.pred.labels,datasets:[{label:'予測(万円)',data:D.pred.values,backgroundColor:'#F69D9D'}]},options:co});
  new Chart(document.getElementById('factory'),{type:'bar',data:{labels:D.factory.stores,datasets:D.factory.cats.map(function(c){return {label:c.label,data:c.data,backgroundColor:c.color};})},options:{plugins:{legend:{labels:{font:{size:11}}}},maintainAspectRatio:false,scales:{x:{stacked:true},y:{stacked:true}}}});
